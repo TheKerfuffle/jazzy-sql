@@ -29,3 +29,5 @@ INSERT INTO "songs" ("title","length", "released")
 VALUES( 'So What','9.22', '1959-08-17');
 INSERT INTO "songs" ("title","length", "released")
 VALUES( 'Black Gold','5.17', '2012-02-01');
+
+DROP TABLE "artists";

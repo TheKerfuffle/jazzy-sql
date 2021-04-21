@@ -60,18 +60,19 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const artist = {
-        name: req.body.name,
-        birthdate: req.body.birthdate
+    let song = {
+        name: req.body.title,
+        birthdate: req.body.length,
+        released: req.body.released
     }
 
-    let queryText = `INSERT INTO "songs" ("artist_name", "year_born")
-                        VALUES($1, $2)
+    let queryText = `INSERT INTO "songs" ("title", "length", "released")
+                        VALUES($1, $2, $3)
                         RETURNING "id";`;
 
-    pool.query(queryText,[req.body.name, req.body.birthdate])
+    pool.query(queryText,[song.name, song.birthdate, song.released])
     .then( result=> {
-        console.log('new artist id is: ', result);
+        console.log('new song id is: ', result);
         res.sendStatus(201);
     })
     .catch( err=>{

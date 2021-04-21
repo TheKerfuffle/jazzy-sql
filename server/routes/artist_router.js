@@ -61,7 +61,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const artist = {
+    let artist = {
         name: req.body.name,
         birthdate: req.body.birthdate
     }
