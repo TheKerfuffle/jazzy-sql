@@ -43,7 +43,7 @@ const artistList = [
     //     name: 'Esperanza Spalding',
     //     birthdate: '10-18-1984'
     // },
-]
+];
 
 router.get('/', (req, res) => {
     // res.send(musicLibrary);
@@ -61,8 +61,24 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    artistList.push(req.body);
-    res.sendStatus(200);
+    const artist = {
+        name: req.body.name,
+        birthdate: req.body.birthdate
+    }
+
+    let queryText = `INSERT INTO "artist" (artist_name, year_born)
+                        VALUES($1, $2)
+                        RETURNING "id";`;
+
+    pool.query(queryText,[req.body.name, req.body.birthdate])
+    .then(result=>{
+        console.log('new artist id is: ', result);
+        res.sendStatus(201);
+    })
+    .catch( err=>{
+        console.log(`this didn't work, ${queryText}`);
+        res.sendStatus(500);
+    })
 });
 
 module.exports = router;
