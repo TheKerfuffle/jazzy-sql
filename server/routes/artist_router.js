@@ -1,9 +1,9 @@
 const express = require('express');
-const { Pool } = require('pg');
 const router = express.Router();
 
 // SET UP PG TO CONNECT TO THE DB
 const pg = require('pg');
+const Pool = pg.Pool;
 // const Pool = pg.Pool; // ALT entry: const { Pool } = require('pg.pool');
 const pool = new Pool({
     database: 'jazzy_sql',
@@ -66,17 +66,17 @@ router.post('/', (req, res) => {
         birthdate: req.body.birthdate
     }
 
-    let queryText = `INSERT INTO "artist" (artist_name, year_born)
+    let queryText = `INSERT INTO "artists" ("artist_name", "year_born")
                         VALUES($1, $2)
                         RETURNING "id";`;
 
     pool.query(queryText,[req.body.name, req.body.birthdate])
-    .then(result=>{
+    .then( result=> {
         console.log('new artist id is: ', result);
         res.sendStatus(201);
     })
     .catch( err=>{
-        console.log(`this didn't work, ${queryText}`);
+        console.log(`this didn't work, ${queryText}, ${err}`);
         res.sendStatus(500);
     })
 });

@@ -17,7 +17,7 @@ function onReady() {
 
 function addArtist() {
     // Get info to send to the server
-    const artistToSend = {
+    let artistToSend = {
         name: $('#artist-name').val(), 
         birthdate: $('#artist-born').val()
     };
@@ -40,7 +40,7 @@ function addArtist() {
 
 function addSong() {
     // Get info to send to the server
-    const newSong = {
+    let newSong = {
         title: $('#song-name').val(), 
         length: $('#song-length').val(),
         released: $('#song-released').val()
